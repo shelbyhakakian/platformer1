@@ -33,6 +33,7 @@
 			var score = 0;
 			var scoreText;
 			var bombs;
+			var GameOver;
 			function preload(){
 				this.load.image("sky", "assets/sky.png");
 				this.load.image("ground", "assets/platform.png");
@@ -119,9 +120,10 @@
 					player.anims.play("turn", true);
 				}
 				//JUMP
-				if( cursors.up.isDown && player.body.touching.down){
+				if( cursors.up.isDown ){
 					player.setVelocityY(-500);
 				}
+				//&& player.body.touching.down
 				//if (cursors.down.isDown && player.body.touching.down){
 					//player.setVelocityY(500);
 				}
@@ -151,6 +153,7 @@
 				player.anims.play('turn');
 				//player.setCollideWorldBounds(false);
 				gameOver = true;
+				GameOver = this.add.text(200, 250, 'GAME OVER', {fontSize: '80px', fill : '#000'});
 			}
 		</script>
 	</body>
