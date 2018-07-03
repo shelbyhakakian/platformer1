@@ -6,6 +6,7 @@
 	</head>
 	<body>
 		<script>
+			//config is the area youre working in
 			var config = {
 				type	: Phaser.AUTO,
 				width	: 800,
@@ -51,6 +52,16 @@
 				platforms.create(600, 400, "ground");
 				platforms.create(50, 250, "ground");
 				platforms.create(750, 220, "ground");
+			//STARS
+				stars = this.physics.add.group({
+					key : 'star',
+					repeat: 11, 
+					setXY : { x:12, y:0, stepX: 70 }
+				});
+				stars.children.iterate( function(child){
+					child.setBounce(Phaser.Math.FloatBetween(0.4, 0.8));
+				});
+
 			//PLAYER
 				player = this.physics.add.sprite(100, 500, 'dude');
 				player.setBounce(0.2);
@@ -78,8 +89,12 @@
 				});
 			//COLLIDERS
 				this.physics.add.collider(player, platforms);
+				this.physics.add.collider(stars, platforms);
+				this.physics.add.overlap(player, stars, collectStar, null, this );
 			//PLAYER EVENTS
 				cursors = this.input.keyboard.createCursorKeys();
+			//UI
+				scoreText = this.add.text(16, 16, 'Score : 0', {fontSize: '32px', fill : '#000'});
 
 			}
 			function update(){
@@ -97,8 +112,13 @@
 				//JUMP
 				if( cursors.up.isDown && player.body.touching.down){
 					player.setVelocityY(-500);
-					
 				}
+			}
+			function collectStar(player, star){
+				star.disableBody(true, true);
+			// disable body means hide the star
+				score += 10;
+				scoreText.setText("Score: " + score);
 			}
 		</script>
 	</body>
