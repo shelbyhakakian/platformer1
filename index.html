@@ -34,6 +34,8 @@
 			var scoreText;
 			var bombs;
 			var GameOver;
+			var bombcount = 0;
+			var bombtext;
 			function preload(){
 				this.load.image("sky", "assets/sky.png");
 				this.load.image("ground", "assets/platform.png");
@@ -105,6 +107,7 @@
 				cursors = this.input.keyboard.createCursorKeys();
 			//UI
 				scoreText = this.add.text(16, 16, 'Score : 0', {fontSize: '32px', fill : '#000'});
+				bombtext = this.add.text(600, 16, 'Bombs : 0', {fontSize: '32px', fill : '#000'});
 
 			}
 			function update(){
@@ -143,6 +146,8 @@
 					bomb.setCollideWorldBounds(true);
 					bomb.setVelocity( Phaser.Math.Between(-200, 200), 20);
 					bomb.allowGravity = false;
+					bombcount += 1;
+					bombtext.setText("Bombs: " + bombcount);
 				}
 			}
 			function hitBomb(player, bomb){
